@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ahnaf Tahsin | </title>
+<meta name="description" content="Ahnaf Tahsin – Student & Creative Mind from Bangladesh." />
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+--bg:#0b0f19;
+--card:#12172a;
+--primary:#5b7cfa;
+--accent:#ffb703;
+--fun:#ff4d6d;
+--text:#e6e9f0;
+--muted:#9aa3b2;
+--radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Poppins',sans-serif;
+background:radial-gradient(circle at top,#12172a,#0b0f19 60%);
+color:var(--text);
+line-height:1.7;
+overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit;}
+header{position:sticky;top:0;z-index:1000;background:rgba(11,15,25,0.8);backdrop-filter:blur(12px);}
+.nav{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:18px 20px;}
+.logo{font-size:22px;font-weight:700;color:var(--primary);font-family:'JetBrains Mono',monospace;}
+.nav ul{display:flex;gap:26px;list-style:none;}
+.nav ul li a{font-size:14px;color:var(--muted);position:relative;}
+.nav ul li a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--primary);transition:0.4s;}
+.nav ul li a:hover::after{width:100%;}
+section{max-width:1200px;margin:auto;padding:110px 20px;}
+.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;}
+.hero h1{font-size:54px;line-height:1.2;}
+.hero h1 span{color:var(--primary);}
+.typing{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--accent);min-height:28px;margin-top:22px;}
+.cta{margin-top:45px;display:flex;gap:20px;flex-wrap:wrap;}
+.btn{padding:13px 34px;border-radius:30px;background:var(--primary);color:#fff;font-weight:500;position:relative;overflow:hidden;}
+.btn:hover{transform:scale(1.06);}
+h2{font-size:36px;margin-bottom:55px;text-align:center;font-family:'JetBrains Mono',monospace;}
+.muted{color:var(--muted);font-size:15px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;}
+.card{background:var(--card);border-radius:var(--radius);padding:34px;transition:0.6s;opacity:0;transform:translateY(50px);}
+.card.show{opacity:1;transform:translateY(0);}
+.card:hover{transform:translateY(-8px);}
+.card i{font-size:32px;color:var(--primary);margin-bottom:16px;}
+.game-area{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
+.game-card{background:linear-gradient(135deg,var(--card),#1a1f3c);border-radius:var(--radius);padding:30px;text-align:center;}
+.game-box{width:90px;height:90px;background:var(--primary);border-radius:14px;margin:25px auto;cursor:pointer;transition:0.2s;}
+.click-btn{padding:14px 30px;border-radius:40px;border:none;background:var(--fun);color:#fff;font-size:16px;cursor:pointer;}
+.mood{font-size:40px;cursor:pointer;}
+footer{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px;}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:15px;}
+.memory-card{background:#333;height:50px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px;}
+.dot-area{height:120px;background:#1a1f3c;border-radius:10px;position:relative;margin-top:10px;}
+.dot{width:20px;height:20px;background:cyan;border-radius:50%;position:absolute;cursor:pointer;}
+@media(max-width:900px){.hero h1{font-size:38px;}}
+</style>
+</head>
+<body>
+
+<header>
+<nav class="nav">
+<div class="logo">Ahnaf_Tahsin{}</div>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#fun">Fun</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Hello, I’m <span>Ahnaf Tahsin</span></h1>
+<div class="typing" id="typing"></div>
+<div class="cta">
+<a href="#about" class="btn">Enter...</a>
+<a href="https://game.ahnaftahsin.ami.bd" class="btn">Try my only game"Tic Tac Khamba"</a>
+</div>
+</section>
+
+<section id="about">
+<h2>About Me</h2>
+<div class="card">
+<p class="muted">
+I’m a class nine student from Bogura, Bangladesh. I like building websites, breaking them accidentally,
+fixing them proudly, and repeating the cycle.
+I study at <b>APBN Public School and College</b>. I play chess like every move is a blunder,
+take photos like the moment might never come back, and write poems when my brain refuses to stay silent.
+This website is not serious. I am serious about learning though.
+</p>
+</div>
+</section>
+
+<section id="skills">
+<h2>Skills & Interests</h2>
+<div class="grid">
+<div class="card"><i class="fa-solid fa-code"></i><h3>Web Basics</h3><p class="muted">HTML, CSS, JavaScript</p></div>
+<div class="card"><i class="fa-solid fa-robot"></i><h3>AI </h3><p class="muted">Chatbot UI & logic experiments</p></div>
+<div class="card"><i class="fa-solid fa-font"></i><h3>Typography</h3><p class="muted">Fonts, spacing & visual rhythm</p></div>
+<div class="card"><i class="fa-solid fa-camera"></i><h3>Photography</h3><p class="muted">Moments, light & framing</p></div>
+</div>
+</section>
+
+<section id="fun">
+<h2>Fun Zone</h2>
+<div class="game-area">
+
+<div class="game-card">
+<h3>Catch the Box</h3>
+<p class="muted">Hover it. If you can.</p>
+<div class="game-box" id="box"></div>
+<p class="muted" id="score">Score: 0</p>
+</div>
+
+<div class="game-card">
+<h3>Useless Button</h3>
+<p class="muted">Do not click this button.</p>
+<button class="click-btn" id="useless">Do NOT Click</button>
+<p class="muted" id="clicks">Clicked: 0 times</p>
+</div>
+
+<div class="game-card">
+<h3>Mood Switch</h3>
+<p class="muted">How are you feeling?</p>
+<div class="mood" id="mood">😐</div>
+</div>
+
+<div class="game-card">
+<h3>Reaction Speed</h3>
+<p class="muted">Wait for green and click fast.</p>
+<div id="reactionBox" class="game-box" style="background:red;"></div>
+<p class="muted" id="reactionTime">Reaction: 0 ms</p>
+</div>
+
+<div class="game-card">
+<h3>Memory Match</h3>
+<p class="muted">Match the emojis.</p>
+<div class="memory-grid" id="memory"></div>
+</div>
+
+<div class="game-card">
+<h3>Dodge The Dot</h3>
+<p class="muted">Click the moving dot.</p>
+<div class="dot-area" id="dotArea">
+<div class="dot" id="dot"></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<div class="card" style="text-align:center">
+<p class="muted">Ideas, jokes, chess openings — all welcome.</p>
+<p><i class="fa-brands fa-facebook"></i> <a href="https://www.facebook.com/ahnaftahsin11" target="_blank">facebook.com/ahnaftahsin11</a></p>
+<p><i class="fa-solid fa-envelope"></i> at@ahnaftahsin.ami.bd</p>
+<p><i class="fa-solid fa-phone"></i> 01732004182</p>
+</div>
+</section>
+
+<footer>
+© 2026 Ahnaf Tahsin — dedicated to Shaheed Sharif Osman Goni Bin Hadi
+</footer>
+
+<script>
+/* Typing animation */
+const texts=["Class 9 Student from Bangladesh","Learning Web Development....","Chess ♟️ | Photography 📷 | Poetry??","Turning curiosity into pixels...","উম্মাদ!!!!"];
+let c=0,i=0,t="";const el=document.getElementById("typing");
+function type(){if(i<texts[c].length){t+=texts[c][i++];el.textContent=t+"_";setTimeout(type,70);}else setTimeout(erase,1200);}
+function erase(){if(i>0){t=t.slice(0,-1);i--;el.textContent=t+"_";setTimeout(erase,40);}else{c=(c+1)%texts.length;setTimeout(type,300);}}
+type();
+
+/* Scroll reveal */
+const cards=document.querySelectorAll('.card');
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show');});},{threshold:0.2});
+cards.forEach(c=>obs.observe(c));
+
+/* Catch the Box */
+let score=0;
+const box=document.getElementById('box');
+const scoreEl=document.getElementById('score');
+box.addEventListener('mouseenter',()=>{
+score++;
+scoreEl.textContent="Score: "+score;
+box.style.transform=`translate(${Math.random()*150-75}px,${Math.random()*150-75}px)`;
+});
+
+/* Useless Button */
+let clicks=0;
+const useless=document.getElementById('useless');
+const clicksEl=document.getElementById('clicks');
+useless.onclick=()=>{
+clicks++;
+clicksEl.textContent=`Clicked: ${clicks} times`;
+};
+
+/* Mood */
+const moods=["😐","😄","🤯","😎","😂"];
+let m=0;
+document.getElementById('mood').onclick=()=>{
+m=(m+1)%moods.length;
+document.getElementById('mood').textContent=moods[m];
+};
+
+/* Reaction Speed */
+let startTime;
+const reactionBox=document.getElementById("reactionBox");
+const reactionTime=document.getElementById("reactionTime");
+function startReaction(){
+reactionBox.style.background="red";
+setTimeout(()=>{
+reactionBox.style.background="green";
+startTime=Date.now();
+},Math.random()*3000+1000);
+}
+reactionBox.onclick=()=>{
+if(reactionBox.style.background==="green"){
+let time=Date.now()-startTime;
+reactionTime.textContent="Reaction: "+time+" ms";
+startReaction();
+}
+};
+startReaction();
+
+/* Memory Game */
+const emojis=["🐶","🐱","🐼","🐸","🐶","🐱","🐼","🐸"];
+const memory=document.getElementById("memory");
+let flipped=[];
+emojis.sort(()=>0.5-Math.random());
+emojis.forEach(e=>{
+let card=document.createElement("div");
+card.className="memory-card";
+card.onclick=()=>{
+if(card.textContent===""){
+card.textContent=e;
+flipped.push(card);
+if(flipped.length===2){
+if(flipped[0].textContent!==flipped[1].textContent){
+setTimeout(()=>{flipped[0].textContent="";flipped[1].textContent="";flipped=[];},600);
+}else{flipped=[];}
+}
+}
+};
+memory.appendChild(card);
+});
+
+/* Dodge The Dot */
+const dot=document.getElementById("dot");
+function moveDot(){
+dot.style.top=Math.random()*90+"px";
+dot.style.left=Math.random()*200+"px";
+}
+dot.onclick=moveDot;
+moveDot();
+</script>
+
+</body>
+</html>
