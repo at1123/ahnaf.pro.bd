@@ -152,7 +152,7 @@
     .nav-brand{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.9rem;color:var(--primary-light);transition:color .3s;letter-spacing:-.02em}
     .nav-brand:hover{color:var(--accent)}
     .nav-right{display:flex;align-items:center;gap:1rem}
-    .theme-toggle{width:40px;height:40px;border-radius:.5rem;border:1px solid rgba(99,102,241,.2);background:rgba(99,102,241,.08);color:var(--primary-light);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:0}
+    .theme-toggle{width:40px;height:40px;border-radius:.5rem;border:1px solid rgba(99,102,241,.2);background:rgba(99,102,241,.08);color:var(--primary-light);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
     .theme-toggle:hover{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.3)}
     .theme-toggle i{width:20px;height:20px}
     .nav-links{display:none;list-style:none;gap:2.5rem}
@@ -659,14 +659,16 @@
 lucide.createIcons();
 
 // ===== SOUND SYSTEM =====
-let soundEnabled=JSON.parse(localStorage.getItem('soundEnabled')??'true');function playSound(freq,duration=100){if(!soundEnabled)return;try{const ctx=new(window.AudioContext||window.webkitAudioContext)(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=freq;osc.connect(gain);gain.connect(ctx.destination);gain.gain.setValueAtTime(.3,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.01,ctx.currentTime+duration/1000);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+duration/1000)}}
-function toggleSoundBtn(){const btn=document.getElementById('soundToggle');if(!btn)return;soundEnabled=!soundEnabled;localStorage.setItem('soundEnabled',soundEnabled);btn.innerHTML=soundEnabled?'<i data-lucide="volume-2" style="width:16px;height:16px"></i>':'<i data-lucide="volume-x" style="width:16px;height:16px"></i>';lucide.createIcons()}
+let soundEnabled=JSON.parse(localStorage.getItem('soundEnabled')??'true');
+let audioContext=null;
+function getAudioContext(){if(!audioContext){try{audioContext=new(window.AudioContext||window.webkitAudioContext)()}catch(e){soundEnabled=false}}return audioContext}
+function playSound(freq,duration=100){if(!soundEnabled)return;try{const ctx=getAudioContext();if(!ctx)return;const osc=ctx.createOscillator();const gain=ctx.createGain();osc.frequency.value=freq;osc.connect(gain);gain.connect(ctx.destination);gain.gain.setValueAtTime(0.3,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+duration/1000);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+duration/1000);}catch(e){}}
+function toggleSoundBtn(){const btn=document.getElementById('soundToggle');if(!btn)return;soundEnabled=!soundEnabled;localStorage.setItem('soundEnabled',soundEnabled);const icon=btn.querySelector('i');if(icon){icon.setAttribute('data-lucide',soundEnabled?'volume-2':'volume-x');if(window.lucide)lucide.createIcons()}}
 
 // ===== THEME TOGGLE =====
-let isDark=JSON.parse(localStorage.getItem('isDarkMode')??'true');function applyTheme(){if(!isDark){document.documentElement.style.setProperty('--bg','#fafafa');document.documentElement.style.setProperty('--fg','#09090b');document.documentElement.style.setProperty('--card','#f4f4f5');document.documentElement.style.setProperty('--card-hover','#e4e4e7');document.documentElement.style.setProperty('--border','#e4e4e7');document.documentElement.style.setProperty('--border-light','#d4d4d8');document.documentElement.style.setProperty('--muted','#71717a');document.documentElement.style.setProperty('--muted-dark','#a1a1aa')}else{document.documentElement.style.setProperty('--bg','#09090b');document.documentElement.style.setProperty('--fg','#fafafa');document.documentElement.style.setProperty('--card','#18181b');document.documentElement.style.setProperty('--card-hover','#27272a');document.documentElement.style.setProperty('--border','#27272a');document.documentElement.style.setProperty('--border-light','#3f3f46');document.documentElement.style.setProperty('--muted','#a1a1aa');document.documentElement.style.setProperty('--muted-dark','#71717a')}}
-function toggleTheme(){isDark=!isDark;localStorage.setItem('isDarkMode',isDark);applyTheme();updateThemeIcon();lucide.createIcons()}
-function updateThemeIcon(){const btn=document.getElementById('themeToggle');const icon=btn.querySelector('i');if(isDark){icon.setAttribute('data-lucide','moon')}else{icon.setAttribute('data-lucide','sun')}lucide.createIcons()}
-applyTheme();updateThemeIcon();
+let isDark=JSON.parse(localStorage.getItem('isDarkMode')??'true');
+function toggleTheme(){isDark=!isDark;localStorage.setItem('isDarkMode',isDark);document.documentElement.style.setProperty('--bg',isDark?'#09090b':'#fafafa');document.documentElement.style.setProperty('--fg',isDark?'#fafafa':'#09090b');const btn=document.getElementById('themeToggle');if(btn){const icon=btn.querySelector('i');if(icon){icon.setAttribute('data-lucide',isDark?'moon':'sun');lucide.createIcons()}}}
+window.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{const btn=document.getElementById('themeToggle');if(btn){const icon=btn.querySelector('i');if(icon){icon.setAttribute('data-lucide',isDark?'moon':'sun');lucide.createIcons()}}},200)});
 
 // ===== Mobile Menu =====
 const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
@@ -802,11 +804,10 @@ function hexRgb(h){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16)
 newCg();
 
 // ===== FULLSCREEN API =====
-function makeFullscreenable(cardEl){const btn=document.createElement('button');btn.className='fullscreen-btn';btn.title='Fullscreen (F)';btn.setAttribute('aria-label','Toggle fullscreen');btn.innerHTML='<i data-lucide="maximize-2"></i>';btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();toggleGameFullscreen(cardEl)};cardEl.appendChild(btn);setTimeout(()=>lucide.createIcons(),50)}
-function toggleGameFullscreen(cardEl){const canvas=cardEl.querySelector('canvas,.snake-area,.g2048-grid,.catch-area');if(!canvas)return;if(!document.fullscreenElement){cardEl.requestFullscreen().catch(e=>console.log('[v0] Fullscreen error:',e))}else{document.exitFullscreen()}}
-document.addEventListener('keydown',e=>{if(e.key==='f'||e.key==='F'){const focused=document.activeElement.closest('.game-card');if(focused){toggleGameFullscreen(focused);e.preventDefault()}}});
-document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.game-card').forEach(makeFullscreenable)});
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{document.querySelectorAll('.game-card').forEach(makeFullscreenable)},100)})}else{setTimeout(()=>{document.querySelectorAll('.game-card').forEach(makeFullscreenable)},100)};
+function makeFullscreenable(cardEl){const btn=document.createElement('button');btn.className='fullscreen-btn';btn.title='Fullscreen (F)';btn.setAttribute('aria-label','Toggle fullscreen');btn.innerHTML='<i data-lucide="maximize-2"></i>';btn.onclick=(e)=>{e.preventDefault();e.stopPropagation();toggleGameFullscreen(cardEl)};cardEl.appendChild(btn);setTimeout(()=>{if(window.lucide)lucide.createIcons()},100)}
+function toggleGameFullscreen(cardEl){if(!document.fullscreenElement){cardEl.requestFullscreen().catch(e=>console.log('Fullscreen unavailable'))}else{document.exitFullscreen()}}
+document.addEventListener('keydown',e=>{if(e.key==='f'||e.key==='F'){const focused=document.activeElement.closest('.game-card');if(focused){e.preventDefault();toggleGameFullscreen(focused)}}});
+window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.game-card').forEach(cardEl=>{if(!cardEl.querySelector('.fullscreen-btn')){makeFullscreenable(cardEl)}})},150)});
 
 // ===== CATCH THE BOX =====
 let ctSc=0;
